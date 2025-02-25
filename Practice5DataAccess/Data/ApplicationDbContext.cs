@@ -13,6 +13,8 @@ namespace Practice5DataAccess.Data
     {
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
