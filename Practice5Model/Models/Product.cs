@@ -19,5 +19,8 @@ namespace Practice5Model.Models
         [Column(TypeName = "money")]
         public decimal SellPrice { get; set; }
 
+        public List<Purchase> Purchases { get; set; }
+        public List<Sale> Sales { get; set; }
+
     }
 }

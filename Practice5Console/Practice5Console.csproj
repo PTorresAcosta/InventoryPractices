@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Practice5Bussiness\Practice5Bussiness.csproj" />
     <ProjectReference Include="..\Practice5DataAccess\Practice5DataAccess.csproj" />
     <ProjectReference Include="..\Practice5Model\Practice5Model.csproj" />
   </ItemGroup>

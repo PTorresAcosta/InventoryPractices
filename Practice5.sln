@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice5DataAccess", "Practice5DataAccess\Practice5DataAccess.csproj", "{49F99BFD-EE92-4049-83BB-FD314932398E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice5Model", "Practice5Model\Practice5Model.csproj", "{0D72634A-E6F4-4628-BBE6-0E8B8E2A3719}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice5Console", "Practice5Console\Practice5Console.csproj", "{0035365F-6A8F-439C-BA4D-705E43175C19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice5Bussiness", "Practice5Bussiness\Practice5Bussiness.csproj", "{0D64B487-F484-4873-9E26-7B91110F85D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0035365F-6A8F-439C-BA4D-705E43175C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0035365F-6A8F-439C-BA4D-705E43175C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0035365F-6A8F-439C-BA4D-705E43175C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D64B487-F484-4873-9E26-7B91110F85D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D64B487-F484-4873-9E26-7B91110F85D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D64B487-F484-4873-9E26-7B91110F85D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D64B487-F484-4873-9E26-7B91110F85D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
