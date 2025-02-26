@@ -10,7 +10,7 @@ namespace Practice5DataAccess
 {
     public class ProductDAO
     {
-        public List<Product> getProducts()
+        public List<Product> GetProducts()
         {
             var result = new List<Product>();
 
@@ -28,5 +28,25 @@ namespace Practice5DataAccess
 
             return result;
         }
+
+        public void AddProduct(Product productToAdd)
+        {
+
+
+            using var context = new ApplicationDbContext();
+
+            try
+            {
+                var result = context.Products.Add(productToAdd);
+                context.SaveChanges();
+                Console.WriteLine(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
     }
 }

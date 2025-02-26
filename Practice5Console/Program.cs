@@ -9,8 +9,13 @@ namespace Practice5Console
 
             ProductBLL productBll = new ProductBLL();
 
-            var productList = productBll.GetProducts();
+            productBll.AddProduct(new Practice5Model.Models.Product { 
+                Name = "Producto Prueba C#",
+                PurchasePrice = 100m,
+                SellPrice = 200m
+            });
 
+            var productList = productBll.GetProducts();
 
 
         }

@@ -18,7 +18,7 @@ namespace Practice5Bussiness
 
             try
             {
-                result = dao.getProducts();
+                result = dao.GetProducts();
             }
             catch (Exception ex)
             {
@@ -26,6 +26,17 @@ namespace Practice5Bussiness
             }
 
             return result;
+        }
+
+        public void AddProduct(Product productToAdd)
+        {
+            //var result = new Product();
+
+            //return result;
+            var dao = new ProductDAO();
+
+            dao.AddProduct(productToAdd);
+
         }
     }
 }
