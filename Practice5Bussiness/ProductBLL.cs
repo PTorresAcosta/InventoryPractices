@@ -35,7 +35,14 @@ namespace Practice5Bussiness
             //return result;
             var dao = new ProductDAO();
 
-            dao.AddProduct(productToAdd);
+            try
+            {
+                dao.AddProduct(productToAdd);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
         }
     }

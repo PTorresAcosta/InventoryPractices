@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Practice5DataAccess.Data;
 using Practice5Model.Models;
 
@@ -29,7 +30,7 @@ namespace Practice5DataAccess
             return result;
         }
 
-        public void AddProduct(Product productToAdd)
+        public async void AddProduct(Product productToAdd)
         {
 
 
@@ -38,7 +39,7 @@ namespace Practice5DataAccess
             try
             {
                 var result = context.Products.Add(productToAdd);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 Console.WriteLine(result);
             }
             catch (Exception ex)
@@ -48,5 +49,40 @@ namespace Practice5DataAccess
 
         }
 
+        public async void UpdateProduct(Product productToUpdate)
+        {
+
+            using var context = new ApplicationDbContext();
+
+            try
+            {
+                var product = context.Products.Find(productToUpdate.ProductId);
+                product = productToUpdate;
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        public async void DeleteProduct(Product productToDelete)
+        {
+            using var context = new ApplicationDbContext();
+
+            try
+            {
+                var product = await context.Products.FindAsync(productToDelete.ProductId);
+                context.Products.Remove(product);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
     }
 }
+ 
