@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Practice5Model\Practice5Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Products\" />
+  </ItemGroup>
+
 </Project>

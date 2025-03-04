@@ -16,17 +16,14 @@ namespace Practice5DataAccess.Data
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
 
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options)
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            //options.UseSqlServer("Server=USQROPTORRESAC1;Database=Practice5StoreDbEF;TrustServerCertificate=True;Trusted_Connection=True;");
-        }
-
-
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    options.UseSqlServer("Server=USQROPTORRESAC1;Database=Practice5StoreDbEF;TrustServerCertificate=True;Trusted_Connection=True;");
+        //}
     }
 }

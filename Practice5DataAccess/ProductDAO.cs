@@ -9,80 +9,97 @@ using Practice5Model.Models;
 
 namespace Practice5DataAccess
 {
-    public class ProductDAO
-    {
-        public List<Product> GetProducts()
-        {
-            var result = new List<Product>();
 
-            using var context = new ApplicationDbContext();
+    public interface IProductDAO
+    {
+        IEnumerable<Product> GetProducts();
+        void AddProduct(Product product);
+        void UpdateProduct(Product product);
+        void DeleteProduct(Product product);
+    }
+
+    public class ProductDAO : IProductDAO
+    {
+
+        private readonly ApplicationDbContext _context;
+
+        public ProductDAO(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public IEnumerable<Product> GetProducts()
+        {
+            IEnumerable<Product> result = null;
+
+            //using var context = new ApplicationDbContext();
 
             try
             {
-                result = context.Products.ToList();
+                result = _context.Products;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error in Data layer: " + ex.Message);
             }
 
 
             return result;
         }
 
-        public async void AddProduct(Product productToAdd)
+        public void AddProduct(Product productToAdd)
         {
 
 
-            using var context = new ApplicationDbContext();
+            //using var context = new ApplicationDbContext();
 
             try
             {
-                var result = context.Products.Add(productToAdd);
-                await context.SaveChangesAsync();
+                var result = _context.Products.Add(productToAdd);
+                _context.SaveChanges();
                 Console.WriteLine(result);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error in Data layer: " + ex.Message);
             }
 
         }
 
-        public async void UpdateProduct(Product productToUpdate)
+        public void UpdateProduct(Product productToUpdate)
         {
 
-            using var context = new ApplicationDbContext();
+            //using var context = new ApplicationDbContext();
 
             try
             {
-                var product = context.Products.Find(productToUpdate.ProductId);
+                var product = _context.Products.Find(productToUpdate.ProductId);
                 product = productToUpdate;
-                await context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error in Data layer: " + ex.Message);
             }
 
         }
 
         public async void DeleteProduct(Product productToDelete)
         {
-            using var context = new ApplicationDbContext();
+            //using var context = new ApplicationDbContext();
 
             try
             {
-                var product = await context.Products.FindAsync(productToDelete.ProductId);
-                context.Products.Remove(product);
-                await context.SaveChangesAsync();
+                var product = _context.Products.Find(productToDelete.ProductId);
+                _context.Products.Remove(product);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error in Data layer: " + ex.Message);
             }
         }
 
+        
     }
 }
  

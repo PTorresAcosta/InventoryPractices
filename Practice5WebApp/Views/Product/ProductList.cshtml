@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Practice5Model.Models.Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center ">
+    <table class="table">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Sell Price</th>
+            <th scope="col">Purchase Price</th>
+        </tr>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <th scope="row">@p.ProductId</th>
+                <td>@p.Name</td>
+                <td>@p.SellPrice</td>
+                <td>@p.PurchasePrice</td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Practice5Bussiness;
+using Practice5DataAccess;
 using Practice5DataAccess.Data;
+using Practice5Model.Models;
 
 namespace Practice5WebApp
 {
@@ -10,11 +13,13 @@ namespace Practice5WebApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddScoped<IProductBLL, ProductBLL>();
+            builder.Services.AddScoped<IProductDAO, ProductDAO>();
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 

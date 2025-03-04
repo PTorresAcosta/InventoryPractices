@@ -8,40 +8,83 @@ using Practice5Model.Models;
 
 namespace Practice5Bussiness
 {
-    public class ProductBLL
-    {
-        public List<Product> GetProducts()
-        {
-            var result = new List<Product>();
 
-            var dao = new ProductDAO();
+    public interface IProductBLL
+    {
+        IEnumerable<Product> GetProducts();
+        void AddProduct(Product product);
+        void UpdateProduct(Product product);
+        void DeleteProduct(Product product);
+    }
+
+    public class ProductBLL : IProductBLL
+    {
+
+        private readonly IProductDAO _productDAO;
+        public ProductBLL(IProductDAO productDAO)
+        {
+            _productDAO = productDAO;
+        }
+
+        public IEnumerable<Product> GetProducts()
+        {
+            IEnumerable<Product> result = null;
+
+            //var dao = new ProductDAO();
 
             try
             {
-                result = dao.GetProducts();
+                result = _productDAO.GetProducts();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error in business layer: " + ex.Message);
             }
 
             return result;
         }
 
-        public void AddProduct(Product productToAdd)
+        public void AddProduct(Product product)
         {
             //var result = new Product();
 
             //return result;
-            var dao = new ProductDAO();
+            //var dao = new ProductDAO();
 
             try
             {
-                dao.AddProduct(productToAdd);
+                _productDAO.AddProduct(product);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+
+        }
+        public void UpdateProduct(Product product)
+        {
+
+            try
+            {
+                _productDAO.AddProduct(product);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in business Layer: " + ex.Message);
+            }
+
+        }
+
+        public void DeleteProduct(Product product)
+        {
+
+            try
+            {
+                _productDAO.UpdateProduct(product);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in Business layer: " + ex.Message);
             }
 
         }
