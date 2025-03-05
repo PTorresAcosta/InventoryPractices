@@ -12,7 +12,7 @@ namespace Practice5Model.Models
     public class Purchase
     {
         [Key]
-        public int SaleId { get; set; }
+        public int PurchaseId { get; set; }
         [ForeignKey("Product")]
         public int ProductId { get; set; }
         public Product Product { get; set; }

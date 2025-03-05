@@ -20,6 +20,7 @@ namespace Practice5Model.Models
 
         public List<Purchase> Purchases { get; set; }
         public List<Sale> Sales { get; set; }
+        public List<Inventory> inventoryList { get; set; }
 
     }
 }
