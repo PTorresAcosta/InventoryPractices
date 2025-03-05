@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Practice5Model.Models.Product>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Product List";
 }
 
 <div class="text-center ">
@@ -10,6 +10,7 @@
             <th scope="col">Name</th>
             <th scope="col">Sell Price</th>
             <th scope="col">Purchase Price</th>
+            <th scope="col">Action</th>
         </tr>
         @foreach (var p in Model)
         {
@@ -18,6 +19,10 @@
                 <td>@p.Name</td>
                 <td>@p.SellPrice</td>
                 <td>@p.PurchasePrice</td>
+                <td>
+                    <a class="btn btn-primary text-white" asp-action="ProductInsert" asp-route-Id="@p.ProductId">Edit</a>
+                    <a class="btn btn-danger text-white" asp-action="Delete" asp-route-Id="@p.ProductId">Delete</a>
+                </td>
             </tr>
         }
 

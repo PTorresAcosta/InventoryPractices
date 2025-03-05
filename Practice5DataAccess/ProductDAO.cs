@@ -72,8 +72,16 @@ namespace Practice5DataAccess
 
             try
             {
-                var product = _context.Products.Find(productToUpdate.ProductId);
-                product = productToUpdate;
+                var products = _context.Products.Where(p => p.ProductId == productToUpdate.ProductId);
+                
+                foreach(var product in products)
+                {
+                    product.ProductId = productToUpdate.ProductId;
+                    product.Name = productToUpdate.Name;
+                    product.SellPrice = productToUpdate.SellPrice;
+                    product.PurchasePrice = productToUpdate.PurchasePrice;
+                }
+
                 _context.SaveChanges();
             }
             catch (Exception ex)

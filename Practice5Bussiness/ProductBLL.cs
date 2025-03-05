@@ -66,7 +66,7 @@ namespace Practice5Bussiness
 
             try
             {
-                _productDAO.AddProduct(product);
+                _productDAO.UpdateProduct(product);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace Practice5Bussiness
 
             try
             {
-                _productDAO.UpdateProduct(product);
+                _productDAO.DeleteProduct(product);
             }
             catch (Exception ex)
             {
