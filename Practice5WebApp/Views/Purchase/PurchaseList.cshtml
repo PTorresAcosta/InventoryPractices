@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Practice5Model.DTO.PurchaseProductDTO>
+@{
+    ViewData["Title"] = "Purchase List";
+}
+
+<div class="text-center ">
+    <table class="table">
+        <tr>
+            <th scope="col">Purchase Id</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product id</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Purchase Date</th>
+        </tr>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <th scope="row">@p.Purchase.PurchaseId</th>
+                <td>@p.Product.Name</td>
+                <td>@p.Product.ProductId</td>
+                <td>@p.Product.PurchasePrice</td>
+                <td>@p.Purchase.PurchaseDate</td>
+            </tr>
+        }
+
+    </table>
+</div>

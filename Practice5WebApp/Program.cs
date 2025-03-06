@@ -19,6 +19,10 @@ namespace Practice5WebApp
             });
             builder.Services.AddScoped<IProductBLL, ProductBLL>();
             builder.Services.AddScoped<IProductDAO, ProductDAO>();
+            builder.Services.AddScoped<IPurchaseDAO, PurchaseDAO>();
+            builder.Services.AddScoped<IPurchaseBLL, PurchaseBLL>();
+            builder.Services.AddScoped<IPurchaseProductDAO, PurchaseProductDAO>();
+            builder.Services.AddScoped<IPurchaseProductBLL, PurchaseProductBLL>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
