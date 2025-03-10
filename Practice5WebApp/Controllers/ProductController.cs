@@ -38,6 +38,7 @@ namespace Practice5WebApp.Controllers
         [HttpGet]
         public IActionResult ProductInsert(int? id)
         {
+
             Product product = new();
             try
             {

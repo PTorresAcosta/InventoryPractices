@@ -1,0 +1,27 @@
+﻿@model Practice5Model.Models.Purchase
+@{
+	var title = "Insert Purchase";
+	if (Model.ProductId != 0)
+	{
+		title = "Edit Purchase";
+	}
+	ViewData["Title"] = title;
+}
+
+<div class="">
+
+	<form method="POST">
+		<input type="hidden" asp-for="PurchaseId" />
+		<div class="form-group my-3">
+			<label for="inputAddress">Product Id</label>
+			<input type="text" class="form-control" asp-for="ProductId">
+		</div>
+		<div class="form-group my-3">
+			<label for="inputAddress2">Date</label>
+			<input type="datetime" class="form-control" asp-for="PurchaseDate">
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+</div>
