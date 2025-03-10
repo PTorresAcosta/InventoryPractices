@@ -35,7 +35,67 @@ namespace Practice5WebApp.Controllers
             return View(purchases);
         }
 
-        
+        [HttpGet]
+        public IActionResult PurchaseInsert(int? id)
+        {
+            Purchase purchase = new();
+
+            try
+            {
+                if (id == null || id == 0)
+                {
+                    return View(purchase);
+                }
+                else
+                {
+                    purchase = _purchaseBLL.GetPurchases().FirstOrDefault(p => p.PurchaseId == id);
+                    if (purchase == null)
+                    {
+                        NotFound();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in controller: " + ex.Message);
+            }
+
+            return View(purchase);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PurchaseInsert(Purchase purchase)
+        {
+            if (ModelState.IsValid)
+            {
+                if (purchase.PurchaseId == 0)
+                {
+                    //create
+                    _purchaseBLL.AddPurchase(purchase);
+                }
+                else
+                {
+                    //update
+                    _purchaseBLL.UpdatePurchase(purchase);
+                }
+                return RedirectToAction(nameof(PurchaseList));
+            }
+            return View(purchase);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            Purchase purchase = new();
+            purchase = _purchaseBLL.GetPurchases().FirstOrDefault(p => p.PurchaseId == id);
+            if (purchase == null)
+            {
+                NotFound();
+            }
+            _purchaseBLL.DeletePurchase(purchase);
+            return RedirectToAction(nameof(PurchaseList));
+        }
 
     }
 }
