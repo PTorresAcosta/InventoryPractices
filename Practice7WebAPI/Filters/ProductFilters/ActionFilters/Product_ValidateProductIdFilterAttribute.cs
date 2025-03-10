@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Practice5Bussiness;
 
-namespace Practice7WebAPI.Filters.ActionFilters
+namespace Practice7WebAPI.Filters.ProductFilters.ActionFilters
 {
     public class Product_ValidateProductIdFilterAttribute : ActionFilterAttribute
     {

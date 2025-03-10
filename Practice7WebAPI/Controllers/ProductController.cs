@@ -2,14 +2,15 @@
 using Practice5Bussiness;
 using Practice5Model.Models;
 using Practice7WebAPI.Filters;
-using Practice7WebAPI.Filters.ActionFilters;
-using Practice7WebAPI.Filters.ExceptionFilters;
+using Practice7WebAPI.Filters.ProductFilters.ActionFilters;
+using Practice7WebAPI.Filters.ProductFilters.ExceptionFilters;
+
 
 namespace Practice7WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
 
         private readonly IProductBLL _productBLL;

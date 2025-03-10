@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Practice5Bussiness;
 using Practice5Model.Models;
 
-namespace Practice7WebAPI.Filters.ActionFilters
+namespace Practice7WebAPI.Filters.ProductFilters.ActionFilters
 {
     public class Product_ValidateCreateProductFilterAttribute : ActionFilterAttribute
     {

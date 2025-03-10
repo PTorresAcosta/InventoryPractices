@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Practice5Bussiness;
 using Practice5Model.Models;
+using Practice5WebApp.Data;
 
 namespace Practice5WebApp.Controllers
 {
@@ -8,24 +10,29 @@ namespace Practice5WebApp.Controllers
     {
 
         private readonly IProductBLL _productBLL;
-        public ProductController(IProductBLL productBLL)
+        private readonly IWebApiExecuter _webApiExecuter;
+        public ProductController(IProductBLL productBLL, IWebApiExecuter webApiExecuter)
         {
             _productBLL = productBLL;
+            _webApiExecuter = webApiExecuter;
         }
 
         [HttpGet]
-        public IActionResult ProductList()
+        public async Task<IActionResult> ProductList()
         {
-            var products = new List<Product>();
-            try
-            {
-                products = _productBLL.GetProducts().ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error in controller: " + ex.Message);
-            }
-            return View(products);
+            //var products = new List<Product>();
+            //try
+            //{
+            //    products = _productBLL.GetProducts().ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error in controller: " + ex.Message);
+            //}
+            //return View(products);
+
+            return View(await _webApiExecuter.InvokeGet<List<Product>>("Product"));
+
         }
 
         //[HttpGet]

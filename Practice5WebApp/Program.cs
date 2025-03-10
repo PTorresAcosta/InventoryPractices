@@ -3,6 +3,7 @@ using Practice5Bussiness;
 using Practice5DataAccess;
 using Practice5DataAccess.Data;
 using Practice5Model.Models;
+using Practice5WebApp.Data;
 
 namespace Practice5WebApp
 {
@@ -13,6 +14,15 @@ namespace Practice5WebApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddHttpClient("InventoryApi", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7016/api/");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
+            builder.Services.AddTransient<IWebApiExecuter, WebApiExecuter>();
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

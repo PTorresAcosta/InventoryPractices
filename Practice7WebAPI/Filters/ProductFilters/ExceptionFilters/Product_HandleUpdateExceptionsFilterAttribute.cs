@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Practice5Bussiness;
 
-namespace Practice7WebAPI.Filters.ExceptionFilters
+namespace Practice7WebAPI.Filters.ProductFilters.ExceptionFilters
 {
     public class Product_HandleUpdateExceptionsFilterAttribute : ExceptionFilterAttribute
     {
