@@ -38,69 +38,153 @@ namespace Practice5WebApp.Controllers
         //[HttpGet]
         //public IActionResult ProductInsert()
         //{
-            
+
         //    return View();
         //}
 
-        [HttpGet]
-        public IActionResult ProductInsert(int? id)
+        //[HttpGet]
+        //public IActionResult ProductInsert(int? id)
+        //{
+
+        //    Product product = new();
+        //    try
+        //    {
+        //        if (id == null || id == 0)
+        //        {
+        //            return View(product);
+        //        }else
+        //        {
+        //            product = _productBLL.GetProducts().FirstOrDefault(p => p.ProductId == id);
+        //            if (product == null)
+        //            {
+        //                NotFound();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("Error in controller: " + ex.Message);
+        //    }
+
+        //    return View(product);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ProductInsert(Product product)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (product.ProductId == 0)
+        //        {
+        //            //create
+        //            _productBLL.AddProduct(product);
+        //        }
+        //        else
+        //        {
+        //            //update
+        //            _productBLL.UpdateProduct(product);
+        //        }
+        //        return RedirectToAction(nameof(ProductList));
+        //    }
+        //    return View(product);
+        //}
+
+        public IActionResult ProductInsert()
         {
-
-            Product product = new();
-            try
-            {
-                if (id == null || id == 0)
-                {
-                    return View(product);
-                }else
-                {
-                    product = _productBLL.GetProducts().FirstOrDefault(p => p.ProductId == id);
-                    if (product == null)
-                    {
-                        NotFound();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error in controller: " + ex.Message);
-            }
-
-            return View(product);
+            return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ProductInsert(Product product)
+        public async Task<IActionResult> ProductInsert(Product product)
         {
             if (ModelState.IsValid)
             {
-                if (product.ProductId == 0)
+
+                try
                 {
-                    //create
-                    _productBLL.AddProduct(product);
+                    var response = await _webApiExecuter.InvokePost("Product", product);
+                    if (response != null)
+                    {
+                        return RedirectToAction(nameof(ProductList));
+                    }
                 }
-                else
+                catch (WebApiException ex)
                 {
-                    //update
-                    _productBLL.UpdateProduct(product);
+                    HandleWebApiException(ex);
                 }
-                return RedirectToAction(nameof(ProductList));
+
+
+            }
+
+            return View(product);
+        }
+
+        public async Task<IActionResult> UpdateProduct(int id)
+        {
+
+            try
+            {
+                var product = await _webApiExecuter.InvokeGet<Product>($"Product/{id}");
+                if (product != null)
+                {
+                    return View(product);
+                }
+
+            }
+            catch (WebApiException ex)
+            {
+                HandleWebApiException(ex);
+                return View();
+            }
+            return NotFound();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProduct(Product product)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _webApiExecuter.InvokePut($"Product/{product.ProductId}", product);
+                    return RedirectToAction(nameof(ProductList));
+                }
+            }
+            catch (WebApiException ex)
+            {
+                HandleWebApiException(ex);
             }
             return View(product);
         }
 
-        
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Product product = new();
-            product = _productBLL.GetProducts().FirstOrDefault(p => p.ProductId == id);
-            if (product == null)
+
+            try
             {
-                NotFound();
+                await _webApiExecuter.InvokeDelete($"Product/{id}");
+                return RedirectToAction(nameof(ProductList));
             }
-            _productBLL.DeleteProduct(product);
-            return RedirectToAction(nameof(ProductList));
+            catch (WebApiException ex)
+            {
+                HandleWebApiException(ex);
+                return View(nameof(ProductList),
+                    await _webApiExecuter.InvokeGet<List<Product>>("Product"));
+            }
         }
+
+        private void HandleWebApiException(WebApiException ex)
+        {
+            if (ex.ErrorResponse != null &&
+                        ex.ErrorResponse.Errors != null &&
+                        ex.ErrorResponse.Errors.Count > 0)
+            {
+                foreach (var error in ex.ErrorResponse.Errors)
+                    ModelState.AddModelError(error.Key, string.Join("; ", error.Value));
+            }
+        }
+
     }
 }

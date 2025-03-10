@@ -9,7 +9,7 @@ namespace Practice5Model.Models
 {
     public class Product
     {
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         public string Name { get; set; }
         
         [Column(TypeName = "money")]
@@ -18,9 +18,9 @@ namespace Practice5Model.Models
         [Column(TypeName = "money")]
         public decimal SellPrice { get; set; }
 
-        public List<Purchase> Purchases { get; set; }
-        public List<Sale> Sales { get; set; }
-        public List<Inventory> inventoryList { get; set; }
+        public List<Purchase>? Purchases { get; set; }
+        public List<Sale>? Sales { get; set; }
+        public List<Inventory>? inventoryList { get; set; }
 
     }
 }
