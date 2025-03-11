@@ -1,13 +1,12 @@
 ﻿@model Practice5Model.Models.Purchase
 @{
-	var title = "Insert Purchase";
+	var title = "Edit Purchase";
 	ViewData["Title"] = title;
 }
 
 <div class="">
 
 	<form method="POST">
-		
 		<div class="text-danger" asp-validation-summary="All"></div>
 		<input type="hidden" asp-for="PurchaseId" />
 		<div class="form-group my-3">
@@ -22,7 +21,6 @@
 		</div>
 
 		<button type="submit" class="btn btn-primary">Submit</button>
-
 	</form>
 
 </div>

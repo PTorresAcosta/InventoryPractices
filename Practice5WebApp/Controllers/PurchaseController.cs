@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Practice5Bussiness;
 using Practice5DataAccess;
 using Practice5Model.DTO;
 using Practice5Model.Models;
+using Practice5WebApp.Data;
 
 namespace Practice5WebApp.Controllers
 {
@@ -11,90 +14,120 @@ namespace Practice5WebApp.Controllers
 
         private readonly IPurchaseBLL _purchaseBLL;
         private readonly IPurchaseProductBLL _purchaseProductBLL;
+        private readonly IWebApiExecuter _webApiExecuter;
 
-        public PurchaseController(IPurchaseBLL purchaseBLL, IPurchaseProductBLL purchaseProductBLL)
+        public PurchaseController(IPurchaseBLL purchaseBLL, IPurchaseProductBLL purchaseProductBLL, IWebApiExecuter webApiExecuter)
         {
             _purchaseBLL = purchaseBLL;
             _purchaseProductBLL = purchaseProductBLL;
+            _webApiExecuter = webApiExecuter;
         }
 
         [HttpGet]
-        public IActionResult PurchaseList()
+        public async Task<IActionResult> PurchaseList()
         {
-            var purchases = new List<PurchaseProductDTO>();
 
-            try
-            {
-                purchases = _purchaseProductBLL.getPurchaseProduct().ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error in controller: " + ex.Message);
-            }
+            return View(await _webApiExecuter.InvokeGet<List<PurchaseProductDTO>>("PurchaseProduct"));
 
-            return View(purchases);
         }
 
         [HttpGet]
-        public IActionResult PurchaseInsert(int? id)
+        public async Task<IActionResult> PurchaseInsert()
         {
-            Purchase purchase = new();
-
-            try
-            {
-                if (id == null || id == 0)
-                {
-                    return View(purchase);
-                }
-                else
-                {
-                    purchase = _purchaseBLL.GetPurchases().FirstOrDefault(p => p.PurchaseId == id);
-                    if (purchase == null)
-                    {
-                        NotFound();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error in controller: " + ex.Message);
-            }
-
-            return View(purchase);
-
+            var products = await _webApiExecuter.InvokeGet<List<Product>>($"Product");
+            ViewData["products"] = new SelectList(products, "ProductId", "Name");
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PurchaseInsert(Purchase purchase)
+        public async Task<IActionResult> PurchaseInsert(Purchase purchase)
         {
             if (ModelState.IsValid)
             {
-                if (purchase.PurchaseId == 0)
+                try
                 {
-                    //create
-                    _purchaseBLL.AddPurchase(purchase);
+                    var response = await _webApiExecuter.InvokePost("Purchase", purchase);
+                    if (response != null)
+                    {
+                        return RedirectToAction(nameof(PurchaseList));
+                    }
                 }
-                else
+                catch (WebApiException ex)
                 {
-                    //update
-                    _purchaseBLL.UpdatePurchase(purchase);
+                    HandleWebApiException(ex);
                 }
+            }
+            return View(purchase);
+
+        }
+
+        public async Task<IActionResult> UpdatePurchase(int? id)
+        {
+
+            try
+            {
+                var purchase = await _webApiExecuter.InvokeGet<Purchase>($"Purchase/{id}");
+                var products = await _webApiExecuter.InvokeGet<List<Product>>($"Product");
+                if (purchase != null && products != null)
+                {
+                    ViewData["products"] = new SelectList(products, "ProductId", "Name");
+                    return View(purchase);
+                }
+            }
+            catch (WebApiException ex)
+            {
+                HandleWebApiException(ex);
+                return View();
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePurchase(Purchase purchase)
+        {
+
+            try
+            {
+                await _webApiExecuter.InvokePut($"Purchase/{purchase.PurchaseId}", purchase);
                 return RedirectToAction(nameof(PurchaseList));
             }
+            catch (WebApiException ex)
+            {
+                HandleWebApiException(ex);
+            }
+
             return View(purchase);
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Purchase purchase = new();
-            purchase = _purchaseBLL.GetPurchases().FirstOrDefault(p => p.PurchaseId == id);
-            if (purchase == null)
+
+            try
             {
-                NotFound();
+                await _webApiExecuter.InvokeDelete($"Purchase/{id}");
+                return RedirectToAction(nameof(PurchaseList));
             }
-            _purchaseBLL.DeletePurchase(purchase);
-            return RedirectToAction(nameof(PurchaseList));
+            catch (WebApiException ex)
+            {
+                HandleWebApiException(ex);
+                return View(nameof(PurchaseList),
+                    await _webApiExecuter.InvokeGet<List<Purchase>>("Purchase"));
+            }
+
+        }
+
+        private void HandleWebApiException(WebApiException ex)
+        {
+            if (ex.ErrorResponse != null &&
+                        ex.ErrorResponse.Errors != null &&
+                        ex.ErrorResponse.Errors.Count > 0)
+            {
+                foreach (var error in ex.ErrorResponse.Errors)
+                    ModelState.AddModelError(error.Key, string.Join("; ", error.Value));
+            }
         }
 
     }

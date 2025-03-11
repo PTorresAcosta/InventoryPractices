@@ -8,7 +8,6 @@
         <tr>
             <th scope="col">Purchase Id</th>
             <th scope="col">Product Name</th>
-            <th scope="col">Product id</th>
             <th scope="col">Amount</th>
             <th scope="col">Purchase Date</th>
             <th scope="col">Action</th>
@@ -18,11 +17,10 @@
             <tr>
                 <th scope="row">@p.Purchase.PurchaseId</th>
                 <td>@p.Product.Name</td>
-                <td>@p.Product.ProductId</td>
-                <td>@p.Product.PurchasePrice</td>
+                <td>@p.Product.PurchasePrice.ToString("c")</td>
                 <td>@p.Purchase.PurchaseDate</td>
                 <td>
-                    <a class="" asp-action="PurchaseInsert" asp-route-Id="@p.Purchase.PurchaseId">Edit</a>
+                    <a class="" asp-action="UpdatePurchase" asp-route-Id="@p.Purchase.PurchaseId">Edit</a>
                     <a class="" asp-action="Delete" asp-route-Id="@p.Purchase.PurchaseId">Delete</a>
                 </td>
             </tr>
