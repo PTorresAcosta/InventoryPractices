@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Practice5DataAccess;
+using Practice5Bussiness.Interfaces;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5Model.DTO;
 
-namespace Practice5Bussiness
+namespace Practice5Bussiness.Implementations
 {
-
-    public interface IPurchaseProductBLL
-    {
-        IEnumerable<PurchaseProductDTO> getPurchaseProduct();
-    }
 
     public class PurchaseProductBLL : IPurchaseProductBLL
     {

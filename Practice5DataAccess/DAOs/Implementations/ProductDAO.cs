@@ -4,19 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5DataAccess.Data;
 using Practice5Model.Models;
 
-namespace Practice5DataAccess
+namespace Practice5DataAccess.DAOs.Implementations
 {
-
-    public interface IProductDAO
-    {
-        IEnumerable<Product> GetProducts();
-        void AddProduct(Product product);
-        void UpdateProduct(Product product);
-        void DeleteProduct(Product product);
-    }
 
     public class ProductDAO : IProductDAO
     {
@@ -31,8 +24,6 @@ namespace Practice5DataAccess
         {
             IEnumerable<Product> result = null;
 
-            //using var context = new ApplicationDbContext();
-
             try
             {
                 result = _context.Products;
@@ -42,16 +33,37 @@ namespace Practice5DataAccess
                 Console.WriteLine("Error in Data layer: " + ex.Message);
             }
 
+            return result;
+        }
+
+        public IEnumerable<Product> GetProductsToSell()
+        {
+            IEnumerable<Product> result = null;
+
+            try
+            {
+                result = from pro in _context.Products
+                         join inv in _context.Inventory
+                         on pro.ProductId equals inv.ProductId
+                         group pro by pro.ProductId into g
+                         select new Product
+                         {
+                             ProductId = g.Select(g => g.ProductId).FirstOrDefault(),
+                             Name = g.Select(g => g.Name).FirstOrDefault(),
+                             PurchasePrice = g.Select(g => g.PurchasePrice).FirstOrDefault(),
+                             SellPrice = g.Select(g => g.SellPrice).FirstOrDefault()
+                         };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in Data layer: " + ex.Message);
+            }
 
             return result;
         }
 
         public void AddProduct(Product productToAdd)
         {
-
-
-            //using var context = new ApplicationDbContext();
-
             try
             {
                 var result = _context.Products.Add(productToAdd);
@@ -62,7 +74,6 @@ namespace Practice5DataAccess
             {
                 Console.WriteLine("Error in Data layer: " + ex.Message);
             }
-
         }
 
         public void UpdateProduct(Product productToUpdate)
@@ -91,7 +102,7 @@ namespace Practice5DataAccess
 
         }
 
-        public async void DeleteProduct(Product productToDelete)
+        public void DeleteProduct(Product productToDelete)
         {
             //using var context = new ApplicationDbContext();
 

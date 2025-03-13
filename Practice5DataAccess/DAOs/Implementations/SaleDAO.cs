@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5DataAccess.Data;
 using Practice5Model.Models;
 
-namespace Practice5DataAccess
+namespace Practice5DataAccess.DAOs.Implementations
 {
-    public interface ISaleDAO
-    {
-        IEnumerable<Sale> GetSales();
-        void AddSale(Sale product);
-        void UpdateSale(Sale product);
-        void DeleteSale(Sale product);
-    }
     public class SaleDAO : ISaleDAO
     {
         
@@ -40,11 +34,18 @@ namespace Practice5DataAccess
 
             return sales;
         }
+
         public void AddSale(Sale sale)
         {
             try
             {
                 _context.Sales.Add(sale);
+
+                var inventoryToRemove = _context.Inventory.FirstOrDefault(inv => inv.ProductId == sale.ProductId);
+
+                _context.Inventory.Remove(inventoryToRemove);
+
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -74,10 +75,17 @@ namespace Practice5DataAccess
         }
         public void DeleteSale(Sale sale)
         {
+
+            var inventoryToAdd = new Inventory
+            {
+                ProductId = sale.ProductId
+            };
+
             try
             {
                 var deletedSale = _context.Sales.Find(sale.SaleId);
                 _context.Sales.Remove(deletedSale);
+                _context.Inventory.Add(inventoryToAdd);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -86,5 +94,7 @@ namespace Practice5DataAccess
             }
 
         }
+
+        
     }
 }

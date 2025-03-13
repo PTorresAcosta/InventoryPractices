@@ -2,19 +2,21 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Practice5Model.Models;
 
-namespace Practice7WebAPI.Filters.PurchaseFilters.ActionFilters
+namespace Practice7WebAPI.Filters.SaleFilters
 {
-    public class Purchase_ValideCreatePurchaseFilterAttribute : ActionFilterAttribute
+    public class Sale_ValidateCreateSaleFilterAttribute : ActionFilterAttribute
     {
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
 
-            var purchase = context.ActionArguments["purchase"] as Purchase;
 
-            if (purchase == null)
+            var sale = context.ActionArguments["sale"] as Sale;
+
+            if (sale == null)
             {
-                context.ModelState.AddModelError("Purchase", "Purchase object is null");
+                context.ModelState.AddModelError("Sale", "Sale object is null");
                 var problemDetails = new ValidationProblemDetails(context.ModelState)
                 {
                     Status = StatusCodes.Status400BadRequest

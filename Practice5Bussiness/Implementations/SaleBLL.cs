@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practice5Bussiness.Interfaces;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5Model.Models;
 
-namespace Practice5DataAccess
+namespace Practice5Bussiness.Implementations
 {
-    public interface ISaleBLL
-    {
-        IEnumerable<Sale> GetSales();
-        void AddSale(Sale sale);
-        void UpdateSale(Sale sale);
-        void DeleteSale(Sale sale);
-    }
     public class SaleBLL : ISaleBLL
     {
 

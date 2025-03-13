@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5DataAccess.Data;
 using Practice5Model.DTO;
 
-namespace Practice5DataAccess
+namespace Practice5DataAccess.DAOs.Implementations
 {
-
-    public interface IPurchaseProductDAO
-    {
-        IEnumerable<PurchaseProductDTO> getPurchaseProduct();
-    }
 
     public class PurchaseProductDAO : IPurchaseProductDAO
     {

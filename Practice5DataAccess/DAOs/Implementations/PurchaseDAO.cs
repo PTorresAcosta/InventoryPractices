@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5DataAccess.Data;
 using Practice5Model.Models;
 
-namespace Practice5DataAccess
+namespace Practice5DataAccess.DAOs.Implementations
 {
-    public interface IPurchaseDAO
-    {
-        IEnumerable<Purchase> GetPurchases();
-        void AddPurchase(Purchase purchase);
-        void UpdatePurchase(Purchase purchase);
-        void DeletePurchase(Purchase purchase);
-    }
     public class PurchaseDAO : IPurchaseDAO
     {
         private readonly ApplicationDbContext _context;
@@ -42,9 +36,16 @@ namespace Practice5DataAccess
         public void AddPurchase(Purchase purchase)
         {
 
+            var inventory = new Inventory
+            {
+                ProductId = purchase.ProductId
+            };
+
+
             try
             {
                 _context.Purchases.Add(purchase);
+                _context.Inventory.Add(inventory);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -75,11 +76,16 @@ namespace Practice5DataAccess
         }
 
         public void DeletePurchase(Purchase purchase)
-        {
+        { 
+
             try
             {
                 var purchaseToDelete = _context.Purchases.Find(purchase.PurchaseId);
                 _context.Purchases.Remove(purchaseToDelete);
+
+                var inventoryToDelete = _context.Inventory.FirstOrDefault(inv => inv.ProductId == purchase.ProductId);
+                _context.Inventory.Remove(inventoryToDelete);
+                
                 _context.SaveChanges();
             }
             catch (Exception ex)

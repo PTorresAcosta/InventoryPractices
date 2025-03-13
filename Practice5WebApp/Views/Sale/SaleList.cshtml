@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Practice5Model.DTO.SaleProductDTO>
+@{
+    ViewData["Title"] = "Sales List";
+}
+
+<div class="text-center ">
+    <table class="table">
+        <tr>
+            <th scope="col">Sale Id</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Sale Date</th>
+            <th scope="col">Action</th>
+        </tr>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <th scope="row">@p.Sales.SaleId</th>
+                <td>@p.Products.Name</td>
+                <td>@p.Products.PurchasePrice.ToString("c")</td>
+                <td>@p.Sales.SaleDate</td>
+                <td>
+                    <a class="" asp-action="Delete" asp-route-Id="@p.Sales.SaleId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

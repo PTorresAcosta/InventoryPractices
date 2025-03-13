@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Practice5Bussiness.Interfaces;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5Model.Models;
 
-namespace Practice5DataAccess
+namespace Practice5Bussiness.Implementations
 {
-    public interface IPurchaseBLL
-    {
-        IEnumerable<Purchase> GetPurchases();
-        void AddPurchase(Purchase purchase);
-        void UpdatePurchase(Purchase purchase);
-        void DeletePurchase(Purchase purchase);
-    }
     public class PurchaseBLL : IPurchaseBLL
     {
         private readonly IPurchaseDAO _purchaseDAO;

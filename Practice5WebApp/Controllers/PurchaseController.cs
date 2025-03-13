@@ -11,15 +11,10 @@ namespace Practice5WebApp.Controllers
 {
     public class PurchaseController : Controller
     {
-
-        private readonly IPurchaseBLL _purchaseBLL;
-        private readonly IPurchaseProductBLL _purchaseProductBLL;
         private readonly IWebApiExecuter _webApiExecuter;
 
-        public PurchaseController(IPurchaseBLL purchaseBLL, IPurchaseProductBLL purchaseProductBLL, IWebApiExecuter webApiExecuter)
+        public PurchaseController(IWebApiExecuter webApiExecuter)
         {
-            _purchaseBLL = purchaseBLL;
-            _purchaseProductBLL = purchaseProductBLL;
             _webApiExecuter = webApiExecuter;
         }
 

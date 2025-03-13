@@ -10,7 +10,7 @@ namespace Practice5WebApp.Controllers
     {
 
         private readonly IWebApiExecuter _webApiExecuter;
-        public ProductController(IProductBLL productBLL, IWebApiExecuter webApiExecuter)
+        public ProductController(IWebApiExecuter webApiExecuter)
         {
             _webApiExecuter = webApiExecuter;
         }

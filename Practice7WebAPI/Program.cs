@@ -1,8 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
-using Practice5Bussiness;
 using Practice5DataAccess.Data;
-using Practice5DataAccess;
+using Practice5Bussiness.Interfaces;
+using Practice5Bussiness.Implementations;
+using Practice5DataAccess.DAOs.Interfaces;
+using Practice5DataAccess.DAOs.Implementations;
+using System.Web.Http;
 
 namespace Practice7WebAPI
 {
@@ -23,18 +26,26 @@ namespace Practice7WebAPI
             builder.Services.AddScoped<IPurchaseBLL, PurchaseBLL>();
             builder.Services.AddScoped<IPurchaseProductDAO, PurchaseProductDAO>();
             builder.Services.AddScoped<IPurchaseProductBLL, PurchaseProductBLL>();
+            builder.Services.AddScoped<IInventoryDAO, InventoryDAO>();
+            builder.Services.AddScoped<IInventoryBLL, InventoryBLL>();
+            builder.Services.AddScoped<ISaleProductDAO, SaleProductDAO>();
+            builder.Services.AddScoped<ISaleProductBLL, SaleProductBLL>();
+            builder.Services.AddScoped<ISaleDAO, SaleDAO>();
+            builder.Services.AddScoped<ISaleBLL, SaleBLL>();
 
             builder.Services.AddControllers();
-            
+
 
             var app = builder.Build();
 
-            
+
 
             app.UseHttpsRedirection();
 
 
             app.MapControllers();
+
+            
 
             app.Run();
         }

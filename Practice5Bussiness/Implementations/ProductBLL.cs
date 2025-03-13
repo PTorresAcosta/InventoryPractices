@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Practice5DataAccess;
+using Practice5Bussiness.Interfaces;
+using Practice5DataAccess.DAOs.Interfaces;
 using Practice5Model.Models;
 
-namespace Practice5Bussiness
+namespace Practice5Bussiness.Implementations
 {
-
-    public interface IProductBLL
-    {
-        IEnumerable<Product> GetProducts();
-        void AddProduct(Product product);
-        void UpdateProduct(Product product);
-        void DeleteProduct(Product product);
-    }
 
     public class ProductBLL : IProductBLL
     {
@@ -35,6 +28,24 @@ namespace Practice5Bussiness
             try
             {
                 result = _productDAO.GetProducts();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in business layer: " + ex.Message);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<Product> GetProductsToSell()
+        {
+            IEnumerable<Product> result = null;
+
+            //var dao = new ProductDAO();
+
+            try
+            {
+                result = _productDAO.GetProductsToSell();
             }
             catch (Exception ex)
             {

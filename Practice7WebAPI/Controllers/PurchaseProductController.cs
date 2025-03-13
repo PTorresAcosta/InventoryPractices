@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Practice5Bussiness;
+using Practice5Bussiness.Interfaces;
 
 namespace Practice7WebAPI.Controllers
 {

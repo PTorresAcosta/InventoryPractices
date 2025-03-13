@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Practice5Bussiness;
+using Practice5Bussiness.Interfaces;
 using Practice5Model.Models;
 using Practice7WebAPI.Filters;
 using Practice7WebAPI.Filters.ProductFilters.ActionFilters;
@@ -25,6 +25,12 @@ namespace Practice7WebAPI.Controllers
         public IActionResult GetProducts()
         {
             return Ok(_productBLL.GetProducts().ToList());
+        }
+
+        [HttpGet("sell")]
+        public IActionResult GetProductsToSell()
+        {
+            return Ok(_productBLL.GetProductsToSell().ToList());
         }
 
         [HttpGet("{id}")]

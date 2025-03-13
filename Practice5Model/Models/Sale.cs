@@ -13,12 +13,12 @@ namespace Practice5Model.Models
     {
 
         [Key]
-        public int SaleId { get; set; }
+        public int? SaleId { get; set; }
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         [JsonIgnore]
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
         public DateTime SaleDate { get; set; }
 
     }

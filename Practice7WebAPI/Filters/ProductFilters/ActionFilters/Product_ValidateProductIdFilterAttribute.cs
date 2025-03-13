@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Practice5Bussiness;
+using Practice5Bussiness.Interfaces;
 
 namespace Practice7WebAPI.Filters.ProductFilters.ActionFilters
 {

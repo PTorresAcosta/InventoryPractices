@@ -1,0 +1,29 @@
+﻿@model List<Practice5Model.DTO.InventoryDTO>
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<div class="text-danger" asp-validation-summary="All"></div>
+
+<div class="text-center ">
+
+    @if (Model != null)
+    {
+        <table class="table">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Stock </th>
+            </tr>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <th scope="row">@p.Product.ProductId</th>
+                    <td>@p.Product.Name</td>
+                    <td>@p.Count</td>
+                </tr>
+            }
+
+        </table>
+    }
+</div>

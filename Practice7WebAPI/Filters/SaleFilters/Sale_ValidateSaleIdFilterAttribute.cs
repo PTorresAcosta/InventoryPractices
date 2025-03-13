@@ -1,28 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using Practice5Bussiness.Implementations;
 using Practice5Bussiness.Interfaces;
 
-namespace Practice7WebAPI.Filters.PurchaseFilters.ActionFilters
+namespace Practice7WebAPI.Filters.SaleFilters
 {
-    public class Purchase_ValidatePurchaseIdFilterAttribute : ActionFilterAttribute
+    public class Sale_ValidateSaleIdFilterAttribute : ActionFilterAttribute
     {
-        private readonly IPurchaseBLL _purchaseBLL;
 
-        public Purchase_ValidatePurchaseIdFilterAttribute(IPurchaseBLL purchaseBLL)
+        private readonly ISaleBLL _saleBLL;
+
+        public Sale_ValidateSaleIdFilterAttribute(ISaleBLL saleBLL)
         {
-            _purchaseBLL = purchaseBLL;
+            _saleBLL = saleBLL;
         }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
 
-            var purchaseId = context.ActionArguments["id"] as int?;
+            var saleId = context.ActionArguments["id"] as int?;
 
-            if (purchaseId.HasValue)
+            if (saleId.HasValue)
             {
-                if (purchaseId <= 0)
+                if (saleId <= 0)
                 {
-                    context.ModelState.AddModelError("PurchaseId", "PurchaseId is invalid");
+                    context.ModelState.AddModelError("SaleId", "SaleId is invalid");
                     var problemDetails = new ValidationProblemDetails(context.ModelState)
                     {
                         Status = StatusCodes.Status400BadRequest
@@ -31,11 +34,11 @@ namespace Practice7WebAPI.Filters.PurchaseFilters.ActionFilters
                 }
                 else
                 {
-                    var purchase = _purchaseBLL.GetPurchases().FirstOrDefault(p => p.PurchaseId == purchaseId.Value);
+                    var sale = _saleBLL.GetSales().FirstOrDefault(p => p.SaleId == saleId.Value);
 
-                    if (purchase == null)
+                    if (sale == null)
                     {
-                        context.ModelState.AddModelError("Purchase", "Purchase doesn´t exist.");
+                        context.ModelState.AddModelError("Sale", "Sale doesn´t exist.");
                         var problemDetails = new ValidationProblemDetails(context.ModelState)
                         {
                             Status = StatusCodes.Status404NotFound
@@ -44,12 +47,11 @@ namespace Practice7WebAPI.Filters.PurchaseFilters.ActionFilters
                     }
                     else
                     {
-                        context.HttpContext.Items["purchase"] = purchase;
+                        context.HttpContext.Items["sale"] = sale;
                     }
                 }
             }
 
         }
-
     }
 }

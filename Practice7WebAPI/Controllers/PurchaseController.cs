@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Practice5Bussiness;
-using Practice5DataAccess;
+using Practice5Bussiness.Interfaces;
 using Practice5Model.Models;
 using Practice7WebAPI.Filters.ProductFilters.ActionFilters;
 using Practice7WebAPI.Filters.PurchaseFilters.ActionFilters;
